@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+  database:
+    image: postgres:alpine
+    volumes:
+      - "db-data:/var/lib/postgresql/data"
+    environment:
+      POSTGRES_USER: books
+      POSTGRES_PASSWORD: LLyNdLtQzBk5pLaY
+    ports:
+      - 5432:5432
+
+  webserver:
+    build: .
+    container_name: webserver
+    depends_on:
+      - database
+    volumes:
+      - ./:/var/www/
+      - ./public:/var/www/html/
+    ports:
+      - 8000:80
+    networks:
+      - database
+      - default
+    restart: always
+
+networks:
+  default:
+  database:
+
+volumes:
+  db-data:
+
+
