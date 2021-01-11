@@ -12,7 +12,7 @@
                     "Auth"
                 ],
                 "summary": "Get a JWT via given credentials.",
-                "description": "Returns list of projects",
+                "description": "Endpoint for log in",
                 "operationId": "App\\Http\\Controllers\\Auth\\AuthController::login",
                 "requestBody": {
                     "content": {
@@ -53,7 +53,7 @@
                                             "type": "string"
                                         },
                                         "expires_in": {
-                                            "description": "Token expiration in miliseconds",
+                                            "description": "Token expiration in seconds",
                                             "type": "integer",
                                             "items": {}
                                         }
@@ -88,6 +88,45 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "access_token": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Log the user out (Invalidate the token).",
+                "description": "Endpoint for log out. It invalidates the JWT",
+                "operationId": "App\\Http\\Controllers\\Auth\\AuthController::logout",
+                "responses": {
+                    "200": {
+                        "description": "Successfully logged out",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "JWT access token",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Successfully logged out"
+                                    }
                                 }
                             }
                         }

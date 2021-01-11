@@ -115,6 +115,33 @@ class AuthController extends Controller
      * Log the user out (Invalidate the token).
      *
      * @return \Illuminate\Http\JsonResponse
+     * 
+     * @OA\Post(
+     *      description="Endpoint for log out. It invalidates the JWT",
+     *      path="/api/auth/logout",
+     *      tags={"Auth"},
+     *      security={{"access_token":{}}},
+     *      @OA\Response(
+     *          response="200", 
+     *          description="Successfully logged out",
+     *          content={
+     *              @OA\MediaType(
+     *                  mediaType="application/json",
+     *                  @OA\Schema(
+     *                      @OA\Property(
+     *                          property="message",
+     *                          type="string",
+     *                          description="JWT access token"
+     *                      ),
+     *                      example={
+     *                          "message": "Successfully logged out"
+     *                      }
+     *                  )
+     *              )
+     *          }
+     *      ),
+     *      @OA\Response(response="401", description="Unauthorized")
+     * )
      */
     public function logout()
     {
