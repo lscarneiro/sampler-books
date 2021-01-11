@@ -14,7 +14,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  *      @OA\Property(property="id", type="integer", readOnly="true", example="1"),
  *      @OA\Property(property="email", type="string", readOnly="true", format="email", description="User unique email address", example="john@foobar.com"),
  *      @OA\Property(property="name", type="string", maxLength=255, example="John"),
- *      @OA\Property(property="date_of_birth", type="date", example="1991-01-22 00:00:00"),
+ *      @OA\Property(property="date_of_birth", type="date", example="1991-01-22"),
  * )
  *
  * Class User
@@ -49,7 +49,7 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'date_of_birth' => 'date',
+        'date_of_birth' => 'date:Y-m-d',
     ];
 
     /**
