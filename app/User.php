@@ -7,6 +7,19 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
+/**
+ *
+ * @OA\Schema(
+ *      @OA\Xml(name="User"),
+ *      @OA\Property(property="id", type="integer", readOnly="true", example="1"),
+ *      @OA\Property(property="email", type="string", readOnly="true", format="email", description="User unique email address", example="john@foobar.com"),
+ *      @OA\Property(property="name", type="string", maxLength=255, example="John"),
+ *      @OA\Property(property="date_of_birth", type="date", example="1991-01-22 00:00:00"),
+ * )
+ *
+ * Class User
+ *
+ */
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;

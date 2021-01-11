@@ -22,6 +22,61 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      * 
+     * @OA\Post(
+     *      description="Returns list of projects",
+     *      path="/api/auth/login",
+     *      tags={"Auth"},
+     *      @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  @OA\Property(
+     *                      property="email",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="password",
+     *                      type="string"
+     *                  ),
+     *                  example={"email": "foo@foobar.com", "password": "P455w0Rd"}
+     *              )
+     *          )
+     *      ),
+     * 
+     *      @OA\Response(
+     *          response="200", 
+     *          description="An acess_token response.",
+     *          content={
+     *              @OA\MediaType(
+     *                  mediaType="application/json",
+     *                  @OA\Schema(
+     *                      @OA\Property(
+     *                          property="access_token",
+     *                          type="string",
+     *                          description="JWT access token"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="token_type",
+     *                          type="string",
+     *                          description="Token type"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="expires_in",
+     *                          type="integer",
+     *                          description="Token expiration in miliseconds",
+     *                          @OA\Items
+     *                      ),
+     *                      example={
+     *                          "access_token": "eyJ0eXAiOiJKV1QiLCJhbGc...",
+     *                          "token_type": "bearer",
+     *                          "expires_in": 3600
+     *                      }
+     *                  )
+     *              )
+     *          }
+     *      ),
+     *      @OA\Response(response="401", description="Unauthorized")
+     * )
      */
     public function login()
     {
@@ -38,6 +93,18 @@ class AuthController extends Controller
      * Get the authenticated User.
      *
      * @return \Illuminate\Http\JsonResponse
+     * 
+     * @OA\Get(
+     *      path="/api/auth/me",
+     *      tags={"Auth"},
+     *      security={{"access_token":{}}},
+     *      @OA\Response(
+     *          response="200", 
+     *          description="The user saved data", 
+     *          @OA\JsonContent(ref="#/components/schemas/User"),
+     *      ),
+     *      @OA\Response(response="401", description="Unauthorized")
+     * )
      */
     public function me()
     {

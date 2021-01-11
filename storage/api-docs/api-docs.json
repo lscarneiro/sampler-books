@@ -1,0 +1,147 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Sampler Book Library API",
+        "description": "This is the documentation of the Sampler Book Library API, with this API you can check-in and out books after you register as an user",
+        "version": "0.0.1"
+    },
+    "paths": {
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Get a JWT via given credentials.",
+                "description": "Returns list of projects",
+                "operationId": "App\\Http\\Controllers\\Auth\\AuthController::login",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "description": "Get a JWT via given credentials.",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "Get a JWT via given credentials.",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "email": "foo@foobar.com",
+                                    "password": "P455w0Rd"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An acess_token response.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "description": "JWT access token",
+                                            "type": "string"
+                                        },
+                                        "token_type": {
+                                            "description": "Token type",
+                                            "type": "string"
+                                        },
+                                        "expires_in": {
+                                            "description": "Token expiration in miliseconds",
+                                            "type": "integer",
+                                            "items": {}
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "access_token": "eyJ0eXAiOiJKV1QiLCJhbGc...",
+                                        "token_type": "bearer",
+                                        "expires_in": 3600
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/auth/me": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Get the authenticated User.",
+                "operationId": "App\\Http\\Controllers\\Auth\\AuthController::me",
+                "responses": {
+                    "200": {
+                        "description": "The user saved data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "access_token": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "email": {
+                        "description": "User unique email address",
+                        "type": "string",
+                        "format": "email",
+                        "readOnly": "true",
+                        "example": "john@foobar.com"
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "John"
+                    },
+                    "date_of_birth": {
+                        "type": "date",
+                        "example": "1991-01-22 00:00:00"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            }
+        },
+        "securitySchemes": {
+            "access_token": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
