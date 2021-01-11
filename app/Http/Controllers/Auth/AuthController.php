@@ -23,7 +23,7 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * 
      * @OA\Post(
-     *      description="Returns list of projects",
+     *      description="Endpoint for log in",
      *      path="/api/auth/login",
      *      tags={"Auth"},
      *      @OA\RequestBody(
@@ -63,7 +63,7 @@ class AuthController extends Controller
      *                      @OA\Property(
      *                          property="expires_in",
      *                          type="integer",
-     *                          description="Token expiration in miliseconds",
+     *                          description="Token expiration in seconds",
      *                          @OA\Items
      *                      ),
      *                      example={
