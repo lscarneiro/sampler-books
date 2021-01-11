@@ -82,7 +82,7 @@ class AuthController extends Controller
     {
         $credentials = request(['email', 'password']);
 
-        if (! $token = auth('api')->attempt($credentials)) {
+        if (!$token = auth('api')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
@@ -103,7 +103,7 @@ class AuthController extends Controller
      *          description="The user saved data", 
      *          @OA\JsonContent(ref="#/components/schemas/User"),
      *      ),
-     *      @OA\Response(response="401", description="Unauthorized")
+     *      @OA\Response(response="401", description="Unauthenticated")
      * )
      */
     public function me()
@@ -140,7 +140,7 @@ class AuthController extends Controller
      *              )
      *          }
      *      ),
-     *      @OA\Response(response="401", description="Unauthorized")
+     *      @OA\Response(response="401", description="Unauthenticated")
      * )
      */
     public function logout()
@@ -176,5 +176,4 @@ class AuthController extends Controller
             'expires_in' => auth('api')->factory()->getTTL() * 60
         ]);
     }
-
 }
