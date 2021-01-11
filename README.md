@@ -5,13 +5,15 @@ Simple API with frontend to manage Book Library
 ### Requirements
 
 * Docker
-* PHP >=7.3
+* PHP >=7.2.5
 * Composer
+
+> The Dockerfile already picks from `7.4`
 
 ### Initial setup
 
 1. Setup `.env` accordingly
-1. Execute `composer install` on the root of the project directory to install the dependencies
+1. Execute `composer install` on the root of the project directory to install the dependencies (you can do this directly from the container, no need to install `composer` on your machine)
 1. You're ready to spin it up for the first time!
 
 ### Spinning up
