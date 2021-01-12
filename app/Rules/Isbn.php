@@ -40,6 +40,6 @@ class Isbn implements Rule
      */
     public function message()
     {
-        return 'The :attribute must be a vakud ISBN-10';
+        return 'Must be a valid ISBN-10.';
     }
 }
