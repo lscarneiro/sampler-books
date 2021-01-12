@@ -47,7 +47,27 @@ class BooksController extends Controller
      *              @OA\Items(ref="#/components/schemas/Book")
      *          )
      *      ),
-     *      @OA\Response(response="401", description="Unauthorized")
+     *      @OA\Response(response="401", description="Unauthenticated"),
+     *      @OA\Response(response="422", description="Unprocessable Entity",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  example="The given data was invalid."
+     *              ),
+     *              @OA\Property(
+     *                  property="errors",
+     *                  type="array",
+     *                  @OA\Items(
+     *                      @OA\Property(
+     *                          property="isbn",
+     *                          type="array",
+     *                          @OA\Items(type="string", example="Must be a valid ISBN-10.")
+     *                      ),
+     *                  )
+     *              )
+     *          )
+     *      )
      * )
      */
     public function search(Request $request)
