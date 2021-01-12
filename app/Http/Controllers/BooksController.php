@@ -43,7 +43,7 @@ class BooksController extends Controller
      * 
      *      @OA\Response(
      *          response="200", 
-     *          description="A successfull book search.",
+     *          description="Mathing books.",
      *          @OA\JsonContent(type="array",
      *              @OA\Items(ref="#/components/schemas/Book")
      *          )
@@ -109,7 +109,7 @@ class BooksController extends Controller
      * 
      *      @OA\Response(
      *          response="200", 
-     *          description="A successfull book search.",
+     *          description="The book data.",
      *          @OA\JsonContent(ref="#/components/schemas/Book")
      *      ),
      *      @OA\Response(response="401", description="Unauthenticated"),
