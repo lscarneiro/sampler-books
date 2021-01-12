@@ -22,4 +22,5 @@ Route::group(['prefix' => 'auth'], function ($router) {
 
 Route::group(['middleware' => 'auth:api'], function ($router) {
     Route::post('books/search', 'BooksController@search');
+    Route::post('books', 'BooksController@create');
 });

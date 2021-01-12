@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  *      @OA\Property(property="title", type="string", maxLength=255, example="Harry Potter and the Philosopher's Stone"),
  *      @OA\Property(property="isbn", type="string", maxLength=10, example="1408855895"),
  *      @OA\Property(property="published_at", type="date", example="2014-01-22"),
- *      @OA\Property(property="status", type="string", enum={"CHECKED_OUT", "AVAILABLE"})
+ *      @OA\Property(property="status", type="string", enum={"CHECKED_OUT", "AVAILABLE"}, example="AVAILABLE")
  * )
  *
  * Class Book
