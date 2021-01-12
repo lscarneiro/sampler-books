@@ -90,28 +90,6 @@ class AuthController extends Controller
     }
 
     /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     * 
-     * @OA\Get(
-     *      path="/api/auth/me",
-     *      tags={"Auth"},
-     *      security={{"access_token":{}}},
-     *      @OA\Response(
-     *          response="200", 
-     *          description="The user saved data", 
-     *          @OA\JsonContent(ref="#/components/schemas/User"),
-     *      ),
-     *      @OA\Response(response="401", description="Unauthenticated")
-     * )
-     */
-    public function me()
-    {
-        return response()->json(auth('api')->user());
-    }
-
-    /**
      * Log the user out (Invalidate the token).
      *
      * @return \Illuminate\Http\JsonResponse
@@ -149,6 +127,29 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Successfully logged out']);
     }
+
+    /**
+     * Get the authenticated User.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * 
+     * @OA\Get(
+     *      path="/api/auth/me",
+     *      tags={"Auth"},
+     *      security={{"access_token":{}}},
+     *      @OA\Response(
+     *          response="200", 
+     *          description="The user saved data", 
+     *          @OA\JsonContent(ref="#/components/schemas/User"),
+     *      ),
+     *      @OA\Response(response="401", description="Unauthenticated")
+     * )
+     */
+    public function me()
+    {
+        return response()->json(auth('api')->user());
+    }
+
 
     /**
      * Refresh a token.

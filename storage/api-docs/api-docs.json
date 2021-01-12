@@ -74,35 +74,6 @@
                 }
             }
         },
-        "/api/auth/me": {
-            "get": {
-                "tags": [
-                    "Auth"
-                ],
-                "summary": "Get the authenticated User.",
-                "operationId": "App\\Http\\Controllers\\Auth\\AuthController::me",
-                "responses": {
-                    "200": {
-                        "description": "The user saved data",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/User"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthenticated"
-                    }
-                },
-                "security": [
-                    {
-                        "access_token": []
-                    }
-                ]
-            }
-        },
         "/api/auth/logout": {
             "post": {
                 "tags": [
@@ -127,6 +98,35 @@
                                     "example": {
                                         "message": "Successfully logged out"
                                     }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "access_token": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/me": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Get the authenticated User.",
+                "operationId": "App\\Http\\Controllers\\Auth\\AuthController::me",
+                "responses": {
+                    "200": {
+                        "description": "The user saved data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
                                 }
                             }
                         }
@@ -236,7 +236,7 @@
                     "Books"
                 ],
                 "summary": "Create book",
-                "description": "Add book to the library.",
+                "description": "Adds a new book to the library.",
                 "operationId": "App\\Http\\Controllers\\BooksController::create",
                 "requestBody": {
                     "content": {
