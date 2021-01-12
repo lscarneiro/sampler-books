@@ -20,6 +20,12 @@ class IsbnTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testShouldPassForValidISBNWithX()
+    {
+        $result = $this->rule->passes('test', '044990248X');
+        $this->assertTrue($result);
+    }
+
     public function testShouldNotPassForNull()
     {
         $result = $this->rule->passes('test', null);

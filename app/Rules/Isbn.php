@@ -25,11 +25,15 @@ class Isbn implements Rule
      */
     public function passes($attribute, $value)
     {
-        if (!preg_match('/\d{10}/', $value)) return false;
+        if (!preg_match('/[0-9]{9}[0-9x]/i', $value)) return false;
+
         $checksum = 0;
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 9; $i++) {
             $checksum += $value[$i] * (10 - $i);
         }
+        $checkDigit = strtolower($value[9]);
+        $checksum += $checkDigit === 'x' ? 10 : $checkDigit;
+
         return $checksum % 11 == 0;
     }
 
