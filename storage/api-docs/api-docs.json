@@ -93,7 +93,7 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Unauthenticated"
                     }
                 },
                 "security": [
@@ -132,7 +132,7 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Unauthenticated"
                     }
                 },
                 "security": [
@@ -141,10 +141,93 @@
                     }
                 ]
             }
+        },
+        "/api/books/search": {
+            "post": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Search books",
+                "description": "Search by Title OR ISBN. If both are passed, ISBN will be used.",
+                "operationId": "App\\Http\\Controllers\\BooksController::search",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "description": "Search books",
+                                        "type": "string",
+                                        "example": "Harry Potter"
+                                    },
+                                    "isbn": {
+                                        "description": "Search books",
+                                        "type": "string",
+                                        "example": "1408855895"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "A successfull book search.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Book"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
         }
     },
     "components": {
         "schemas": {
+            "Book": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "title": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "Harry Potter and the Philosopher's Stone"
+                    },
+                    "isbn": {
+                        "type": "string",
+                        "maxLength": 10,
+                        "example": "1408855895"
+                    },
+                    "published_at": {
+                        "type": "date",
+                        "example": "2014-01-22"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "CHECKED_OUT",
+                            "AVAILABLE"
+                        ]
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Book"
+                }
+            },
             "User": {
                 "properties": {
                     "id": {
@@ -166,7 +249,7 @@
                     },
                     "date_of_birth": {
                         "type": "date",
-                        "example": "1991-01-22 00:00:00"
+                        "example": "1991-01-22"
                     }
                 },
                 "type": "object",
