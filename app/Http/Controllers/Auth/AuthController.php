@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-
+use App\Rules\ValidPassword;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use App\User;
 
 class AuthController extends Controller
 {
@@ -14,7 +16,122 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+    }
+
+    /**
+     * Register as new user.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * 
+     * @OA\Post(
+     *      description="Register as new user",
+     *      path="/api/auth/register",
+     *      tags={"Auth"},
+     * 
+     *      @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  @OA\Property(
+     *                      property="name",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="email",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="date_of_birth",
+     *                      type="date"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="password",
+     *                      type="string"
+     *                  ),
+     *                  example={
+     *                      "name": "George Lucas", 
+     *                      "email": "george@lucasarts.com", 
+     *                      "date_of_birth": "1944-05-14", 
+     *                      "password": "5T4r W4Rs"
+     *                  }
+     *              )
+     *          )
+     *      ),
+     * 
+     *      @OA\Response(
+     *          response="200", 
+     *          description="An acess_token response.",
+     *          content={
+     *              @OA\MediaType(
+     *                  mediaType="application/json",
+     *                  @OA\Schema(
+     *                      @OA\Property(
+     *                          property="access_token",
+     *                          type="string",
+     *                          description="JWT access token"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="token_type",
+     *                          type="string",
+     *                          description="Token type"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="expires_in",
+     *                          type="integer",
+     *                          description="Token expiration in seconds",
+     *                          @OA\Items
+     *                      ),
+     *                      example={
+     *                          "access_token": "eyJ0eXAiOiJKV1QiLCJhbGc...",
+     *                          "token_type": "bearer",
+     *                          "expires_in": 3600
+     *                      }
+     *                  )
+     *              )
+     *          }
+     *      ),
+     *      @OA\Response(response="401", description="Unauthorized"),
+     *      @OA\Response(response="422", description="Unprocessable Entity",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  example="The given data was invalid."
+     *              ),
+     *              @OA\Property(
+     *                  property="errors",
+     *                  type="array",
+     *                  @OA\Items(
+     *                      @OA\Property(
+     *                          property="email",
+     *                          type="array",
+     *                          @OA\Items(type="string", example="The email must be a valid email address.")
+     *                      ),
+     *                      @OA\Property(
+     *                          property="date_of_birth",
+     *                          type="array",
+     *                          @OA\Items(type="string", example="The date of birth is not a valid date.")
+     *                      ),
+     *                  )
+     *              )
+     *          )
+     *      )
+     * )
+     */
+    public function register()
+    {
+        request()->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => ['required', 'string', 'min:8', new ValidPassword],
+            'date_of_birth' => 'required|date:Y-m-d',
+        ]);
+
+        $user = User::create(request()->input());
+        $token = JWTAuth::fromUser($user);
+
+        return $this->respondWithToken($token);
     }
 
     /**

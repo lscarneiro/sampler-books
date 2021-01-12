@@ -6,6 +6,126 @@
         "version": "0.0.1"
     },
     "paths": {
+        "/api/auth/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Register as new user.",
+                "description": "Register as new user",
+                "operationId": "App\\Http\\Controllers\\Auth\\AuthController::register",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Register as new user.",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "Register as new user.",
+                                        "type": "string"
+                                    },
+                                    "date_of_birth": {
+                                        "description": "Register as new user.",
+                                        "type": "date"
+                                    },
+                                    "password": {
+                                        "description": "Register as new user.",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "name": "George Lucas",
+                                    "email": "george@lucasarts.com",
+                                    "date_of_birth": "1944-05-14",
+                                    "password": "5T4r W4Rs"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An acess_token response.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "description": "JWT access token",
+                                            "type": "string"
+                                        },
+                                        "token_type": {
+                                            "description": "Token type",
+                                            "type": "string"
+                                        },
+                                        "expires_in": {
+                                            "description": "Token expiration in seconds",
+                                            "type": "integer",
+                                            "items": {}
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "access_token": "eyJ0eXAiOiJKV1QiLCJhbGc...",
+                                        "token_type": "bearer",
+                                        "expires_in": 3600
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Register as new user.",
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "description": "Register as new user.",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "email": {
+                                                        "description": "Register as new user.",
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string",
+                                                            "example": "The email must be a valid email address."
+                                                        }
+                                                    },
+                                                    "date_of_birth": {
+                                                        "description": "Register as new user.",
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string",
+                                                            "example": "The date of birth is not a valid date."
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/auth/login": {
             "post": {
                 "tags": [
