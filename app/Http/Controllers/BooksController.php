@@ -7,6 +7,7 @@ use App\Book;
 use App\Exceptions\UncompletedAction;
 use App\Rules\Isbn;
 use App\UserActionLog;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BooksController extends Controller
 {
@@ -152,7 +153,6 @@ class BooksController extends Controller
         return response()->json($book);
     }
 
-
     /**
      * Checkout book
      *
@@ -184,7 +184,7 @@ class BooksController extends Controller
      *              @OA\Property(
      *                  property="message",
      *                  type="string",
-     *                  example="Book checkout successful, enjoy your reading!."
+     *                  example="Book checkout successful, enjoy your reading!"
      *              ),
      *          )
      *      ),
@@ -229,7 +229,101 @@ class BooksController extends Controller
         });
 
         return response()->json([
-            "message" => "Book checkout successful, enjoy your reading!."
+            "message" => "Book checkout successful, enjoy your reading!"
+        ]);
+    }
+
+    /**
+     * Checkin book
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * 
+     * @OA\Post(
+     *      description="Checks in a book.",
+     *      path="/api/books/{bookId}/checkin",
+     *      tags={"Books"},
+     *      security={{"access_token":{}}},
+     * 
+     *      @OA\Parameter(
+     *          name="bookId",
+     *          in="path",
+     *          description="ID of book",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer",
+     *              format="int64",
+     *              maximum=10,
+     *              minimum=1
+     *          )
+     *      ),
+     * 
+     *      @OA\Response(
+     *          response="200", 
+     *          description="Book successfully checked in.",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  example="Book checkin successful, combe back later!"
+     *              ),
+     *          )
+     *      ),
+     *      @OA\Response(response="401", description="Unauthenticated"),
+     *      @OA\Response(response="422", description="Unprocessable Entity",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  example="Action could be completed."
+     *              ),
+     *              @OA\Property(
+     *                  property="errors",
+     *                  type="array",
+     *                  @OA\Items(
+     *                      @OA\Property(
+     *                          property="already_available",
+     *                          type="array",
+     *                          @OA\Items(type="string", example="Book is already available.")
+     *                      ),
+     *                  )
+     *              )
+     *          )
+     *      )
+     * )
+     */
+    public function checkin($id)
+    {
+        $book = Book::findOrFail($id);
+
+        if ($book->isAvailable()) {
+            throw new UncompletedAction(["already_available" => "Book is already available."]);
+        }
+        $user_id = auth()->user()->id;
+
+        $lastLog = UserActionLog::where('user_id', $user_id)
+            ->where('book_id', $id)
+            ->orderBy('id', 'desc')
+            ->first();
+
+        if (!isset($lastLog)) {
+            throw new NotFoundHttpException();
+        }
+        if ($lastLog->action === 'CHECKIN') {
+            throw new UncompletedAction(["already_available" => "Book is already available."]);
+        }
+
+        \DB::transaction(function () use ($book, $user_id) {
+            $book->status = "AVAILABLE";
+            $book->save();
+
+            $userLog = new UserActionLog(['action' => 'CHECKIN']);
+            $userLog->user_id = auth()->user()->id;
+            $userLog->book_id = $book->id;
+            $userLog->save();
+        });
+
+        return response()->json([
+            "message" => "Book checkin successful, combe back later!"
         ]);
     }
 }

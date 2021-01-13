@@ -9,7 +9,9 @@ use App\Book;
 use App\UserActionLog;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
+use function PHPUnit\Framework\assertFalse;
 use function PHPUnit\Framework\assertNotNull;
+use function PHPUnit\Framework\assertTrue;
 
 class BookTest extends TestCase
 {
@@ -114,5 +116,62 @@ class BookTest extends TestCase
 
         $updatedBook = Book::find($book->id);
         assertFalse($updatedBook->isAvailable());
+    }
+
+    public function testShouldNotCheckinBookWithoutAuthorzation()
+    {
+        $response = $this->postJson("/api/books/1/checkin", []);
+
+        $response->assertUnauthorized();
+    }
+
+    public function testShouldNotCheckinAlreadyAvailableBook()
+    {
+        $book = factory(Book::class)->create();
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->access_token)
+            ->postJson("/api/books/$book->id/checkin", []);
+
+        $response->assertStatus(422)->assertJsonValidationErrors('already_available');
+    }
+
+    public function testShouldNotCheckinBookByDifferentUser()
+    {
+        $book = factory(Book::class)->states('checked_out')->create();
+        $userLog = new UserActionLog(['action' => 'CHECKOUT']);
+        $userLog->user_id = $this->user->id;
+        $userLog->book_id = $book->id;
+        $userLog->save();
+
+        $newUser = factory(User::class)->create();
+        $newToken = JWTAuth::fromUser($newUser);
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $newToken)
+            ->postJson("/api/books/$book->id/checkin", []);
+
+        $response->assertNotFound();
+    }
+
+    public function testShouldCheckinBook()
+    {
+        $book = factory(Book::class)->states('checked_out')->create();
+        $userLog = new UserActionLog(['action' => 'CHECKOUT']);
+        $userLog->user_id = $this->user->id;
+        $userLog->book_id = $book->id;
+        $userLog->save();
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->access_token)
+            ->postJson("/api/books/$book->id/checkin", []);
+
+        $response->assertStatus(200);
+
+        $userLog = UserActionLog::where('user_id', $this->user->id)
+            ->where('book_id', $book->id)
+            ->where('action', 'CHECKIN')
+            ->first();
+        assertNotNull($userLog);
+
+        $updatedBook = Book::find($book->id);
+        assertTrue($updatedBook->isAvailable());
     }
 }
