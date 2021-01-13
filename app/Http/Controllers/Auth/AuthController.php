@@ -128,7 +128,10 @@ class AuthController extends Controller
             'date_of_birth' => 'required|date:Y-m-d',
         ]);
 
-        $user = User::create(request()->input());
+        $userData = request(['name', 'email', 'date_of_birth']);
+        $userData['password'] =  bcrypt(request('password'));
+
+        $user = User::create($userData);
         $token = JWTAuth::fromUser($user);
 
         return $this->respondWithToken($token);
