@@ -190,6 +190,48 @@
                     },
                     "401": {
                         "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Get a JWT via given credentials.",
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "description": "Get a JWT via given credentials.",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "email": {
+                                                        "description": "Get a JWT via given credentials.",
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string",
+                                                            "example": "The email field is required."
+                                                        }
+                                                    },
+                                                    "password": {
+                                                        "description": "Get a JWT via given credentials.",
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string",
+                                                            "example": "The password field is required."
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }

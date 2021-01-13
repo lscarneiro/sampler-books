@@ -195,11 +195,41 @@ class AuthController extends Controller
      *              )
      *          }
      *      ),
-     *      @OA\Response(response="401", description="Unauthorized")
+     *      @OA\Response(response="401", description="Unauthorized"),
+     *      @OA\Response(response="422", description="Unprocessable Entity",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  example="The given data was invalid."
+     *              ),
+     *              @OA\Property(
+     *                  property="errors",
+     *                  type="array",
+     *                  @OA\Items(
+     *                      @OA\Property(
+     *                          property="email",
+     *                          type="array",
+     *                          @OA\Items(type="string", example="The email field is required.")
+     *                      ),
+     *                      @OA\Property(
+     *                          property="password",
+     *                          type="array",
+     *                          @OA\Items(type="string", example="The password field is required.")
+     *                      ),
+     *                  )
+     *              )
+     *          )
+     *      )
      * )
      */
     public function login()
     {
+        request()->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
+
         $credentials = request(['email', 'password']);
 
         if (!$token = auth('api')->attempt($credentials)) {
