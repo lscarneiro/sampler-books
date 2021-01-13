@@ -46,4 +46,9 @@ class Book extends Model
     protected $casts = [
         'published_at' => 'date:Y-m-d',
     ];
+
+    public function isAvailable()
+    {
+        return $this->status === 'AVAILABLE';
+    }
 }

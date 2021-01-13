@@ -3,11 +3,13 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\User;
 use App\Book;
+use App\UserActionLog;
 use Tymon\JWTAuth\Facades\JWTAuth;
+
+use function PHPUnit\Framework\assertNotNull;
 
 class BookTest extends TestCase
 {
@@ -19,8 +21,8 @@ class BookTest extends TestCase
     {
         parent::setUp();
 
-        $user = factory(User::class)->create();
-        $this->access_token = JWTAuth::fromUser($user);
+        $this->user = factory(User::class)->create();
+        $this->access_token = JWTAuth::fromUser($this->user);
     }
 
     public function testUnauthorizedSearch()
@@ -76,5 +78,38 @@ class BookTest extends TestCase
 
         $response->assertStatus(422)
             ->assertJsonValidationErrors('isbn');
+    }
+
+    public function testShouldNotCheckoutBookWithoutAuthorzation()
+    {
+        $response = $this->postJson("/api/books/1/checkout", []);
+
+        $response->assertUnauthorized();
+    }
+
+    public function testShouldNotCheckoutUnavailableBook()
+    {
+        $book = factory(Book::class)->states('checked_out')->create();
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->access_token)
+            ->postJson("/api/books/$book->id/checkout", []);
+
+        $response->assertStatus(422)->assertJsonValidationErrors('checked_out');
+    }
+
+    public function testShouldCheckoutBook()
+    {
+        $book = factory(Book::class)->create();
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->access_token)
+            ->postJson("/api/books/$book->id/checkout", []);
+
+        $response->assertStatus(200);
+
+        $userLog = UserActionLog::where('user_id', $this->user->id)
+            ->where('book_id', $book->id)
+            ->where('action', 'CHECKOUT')
+            ->first();
+        assertNotNull($userLog);
     }
 }

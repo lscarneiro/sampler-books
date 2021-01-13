@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Book;
+use App\Exceptions\UncompletedAction;
 use App\Rules\Isbn;
+use App\UserActionLog;
 
 class BooksController extends Controller
 {
@@ -148,5 +150,86 @@ class BooksController extends Controller
         $book->save();
 
         return response()->json($book);
+    }
+
+
+    /**
+     * Checkout book
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * 
+     * @OA\Post(
+     *      description="Checks out a book.",
+     *      path="/api/books/{bookId}/checkout",
+     *      tags={"Books"},
+     *      security={{"access_token":{}}},
+     * 
+     *      @OA\Parameter(
+     *          name="bookId",
+     *          in="path",
+     *          description="ID of book",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer",
+     *              format="int64",
+     *              maximum=10,
+     *              minimum=1
+     *          )
+     *      ),
+     * 
+     *      @OA\Response(
+     *          response="200", 
+     *          description="Book successfully checked out.",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  example="Book checkout successful, enjoy your reading!."
+     *              ),
+     *          )
+     *      ),
+     *      @OA\Response(response="401", description="Unauthenticated"),
+     *      @OA\Response(response="422", description="Unprocessable Entity",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  example="Action could be completed."
+     *              ),
+     *              @OA\Property(
+     *                  property="errors",
+     *                  type="array",
+     *                  @OA\Items(
+     *                      @OA\Property(
+     *                          property="checked_out",
+     *                          type="array",
+     *                          @OA\Items(type="string", example="Book is not available to checkout.")
+     *                      ),
+     *                  )
+     *              )
+     *          )
+     *      )
+     * )
+     */
+    public function checkout($id)
+    {
+        $book = Book::findOrFail($id);
+
+        if (!$book->isAvailable()) {
+            throw new UncompletedAction(["checked_out" => "Book is not available to checkout."]);
+        }
+        \DB::transaction(function () use ($book) {
+            $book->status = "CHECKED_OUT";
+            $book->save();
+
+            $userLog = new UserActionLog(['action' => 'CHECKOUT']);
+            $userLog->user_id = auth()->user()->id;
+            $userLog->book_id = $book->id;
+            $userLog->save();
+        });
+
+        return response()->json([
+            "message" => "Book checkout successful, enjoy your reading!."
+        ]);
     }
 }

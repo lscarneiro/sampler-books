@@ -14,4 +14,6 @@ $factory->define(Book::class, function (Faker $faker) {
         'published_at' => date_time_set($faker->dateTime($max = 'now', $timezone = null), 0, 0, 0, 0),
         'status' => 'AVAILABLE', // default
     ];
-});
+})->state(Book::class, 'checked_out', [
+    'status' => 'CHECKED_OUT',
+]);
