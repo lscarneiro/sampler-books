@@ -94,28 +94,25 @@
                                         },
                                         "errors": {
                                             "description": "Register as new user.",
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "email": {
-                                                        "description": "Register as new user.",
-                                                        "type": "array",
-                                                        "items": {
-                                                            "type": "string",
-                                                            "example": "The email must be a valid email address."
-                                                        }
-                                                    },
-                                                    "date_of_birth": {
-                                                        "description": "Register as new user.",
-                                                        "type": "array",
-                                                        "items": {
-                                                            "type": "string",
-                                                            "example": "The date of birth is not a valid date."
-                                                        }
+                                            "properties": {
+                                                "email": {
+                                                    "description": "Register as new user.",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The email must be a valid email address."
                                                     }
                                                 },
-                                                "type": "object"
-                                            }
+                                                "date_of_birth": {
+                                                    "description": "Register as new user.",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The date of birth is not a valid date."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -204,28 +201,25 @@
                                         },
                                         "errors": {
                                             "description": "Get a JWT via given credentials.",
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "email": {
-                                                        "description": "Get a JWT via given credentials.",
-                                                        "type": "array",
-                                                        "items": {
-                                                            "type": "string",
-                                                            "example": "The email field is required."
-                                                        }
-                                                    },
-                                                    "password": {
-                                                        "description": "Get a JWT via given credentials.",
-                                                        "type": "array",
-                                                        "items": {
-                                                            "type": "string",
-                                                            "example": "The password field is required."
-                                                        }
+                                            "properties": {
+                                                "email": {
+                                                    "description": "Get a JWT via given credentials.",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The email field is required."
                                                     }
                                                 },
-                                                "type": "object"
-                                            }
+                                                "password": {
+                                                    "description": "Get a JWT via given credentials.",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The password field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -363,20 +357,17 @@
                                         },
                                         "errors": {
                                             "description": "Search books",
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "isbn": {
-                                                        "description": "Search books",
-                                                        "type": "array",
-                                                        "items": {
-                                                            "type": "string",
-                                                            "example": "Must be a valid ISBN-10."
-                                                        }
+                                            "properties": {
+                                                "isbn": {
+                                                    "description": "Search books",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "Must be a valid ISBN-10."
                                                     }
-                                                },
-                                                "type": "object"
-                                            }
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -461,20 +452,17 @@
                                         },
                                         "errors": {
                                             "description": "Create book",
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "isbn": {
-                                                        "description": "Create book",
-                                                        "type": "array",
-                                                        "items": {
-                                                            "type": "string",
-                                                            "example": "Must be a valid ISBN-10."
-                                                        }
+                                            "properties": {
+                                                "isbn": {
+                                                    "description": "Create book",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "Must be a valid ISBN-10."
                                                     }
-                                                },
-                                                "type": "object"
-                                            }
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -546,20 +534,17 @@
                                         },
                                         "errors": {
                                             "description": "Checkout book",
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "checked_out": {
-                                                        "description": "Checkout book",
-                                                        "type": "array",
-                                                        "items": {
-                                                            "type": "string",
-                                                            "example": "Book is not available to checkout."
-                                                        }
+                                            "properties": {
+                                                "checked_out": {
+                                                    "description": "Checkout book",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "Book is not available to checkout."
                                                     }
-                                                },
-                                                "type": "object"
-                                            }
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -631,20 +616,17 @@
                                         },
                                         "errors": {
                                             "description": "Checkin book",
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "already_available": {
-                                                        "description": "Checkin book",
-                                                        "type": "array",
-                                                        "items": {
-                                                            "type": "string",
-                                                            "example": "Book is already available."
-                                                        }
+                                            "properties": {
+                                                "already_available": {
+                                                    "description": "Checkin book",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "Book is already available."
                                                     }
-                                                },
-                                                "type": "object"
-                                            }
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"

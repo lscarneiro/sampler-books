@@ -23,12 +23,12 @@ class AuthController extends Controller
      * Register as new user.
      *
      * @return \Illuminate\Http\JsonResponse
-     * 
+     *
      * @OA\Post(
      *      description="Register as new user",
      *      path="/api/auth/register",
      *      tags={"Auth"},
-     * 
+     *
      *      @OA\RequestBody(
      *          @OA\MediaType(
      *              mediaType="application/json",
@@ -50,17 +50,17 @@ class AuthController extends Controller
      *                      type="string"
      *                  ),
      *                  example={
-     *                      "name": "George Lucas", 
-     *                      "email": "george@lucasarts.com", 
-     *                      "date_of_birth": "1944-05-14", 
+     *                      "name": "George Lucas",
+     *                      "email": "george@lucasarts.com",
+     *                      "date_of_birth": "1944-05-14",
      *                      "password": "5T4r W4Rs"
      *                  }
      *              )
      *          )
      *      ),
-     * 
+     *
      *      @OA\Response(
-     *          response="200", 
+     *          response="200",
      *          description="An acess_token response.",
      *          content={
      *              @OA\MediaType(
@@ -101,19 +101,17 @@ class AuthController extends Controller
      *              ),
      *              @OA\Property(
      *                  property="errors",
-     *                  type="array",
-     *                  @OA\Items(
-     *                      @OA\Property(
-     *                          property="email",
-     *                          type="array",
-     *                          @OA\Items(type="string", example="The email must be a valid email address.")
-     *                      ),
-     *                      @OA\Property(
-     *                          property="date_of_birth",
-     *                          type="array",
-     *                          @OA\Items(type="string", example="The date of birth is not a valid date.")
-     *                      ),
-     *                  )
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="email",
+     *                      type="array",
+     *                      @OA\Items(type="string", example="The email must be a valid email address.")
+     *                  ),
+     *                  @OA\Property(
+     *                      property="date_of_birth",
+     *                      type="array",
+     *                      @OA\Items(type="string", example="The date of birth is not a valid date.")
+     *                  ),
      *              )
      *          )
      *      )
@@ -141,7 +139,7 @@ class AuthController extends Controller
      * Get a JWT via given credentials.
      *
      * @return \Illuminate\Http\JsonResponse
-     * 
+     *
      * @OA\Post(
      *      description="Endpoint for log in",
      *      path="/api/auth/login",
@@ -162,9 +160,9 @@ class AuthController extends Controller
      *              )
      *          )
      *      ),
-     * 
+     *
      *      @OA\Response(
-     *          response="200", 
+     *          response="200",
      *          description="An acess_token response.",
      *          content={
      *              @OA\MediaType(
@@ -205,19 +203,17 @@ class AuthController extends Controller
      *              ),
      *              @OA\Property(
      *                  property="errors",
-     *                  type="array",
-     *                  @OA\Items(
-     *                      @OA\Property(
-     *                          property="email",
-     *                          type="array",
-     *                          @OA\Items(type="string", example="The email field is required.")
-     *                      ),
-     *                      @OA\Property(
-     *                          property="password",
-     *                          type="array",
-     *                          @OA\Items(type="string", example="The password field is required.")
-     *                      ),
-     *                  )
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="email",
+     *                      type="array",
+     *                      @OA\Items(type="string", example="The email field is required.")
+     *                  ),
+     *                  @OA\Property(
+     *                      property="password",
+     *                      type="array",
+     *                      @OA\Items(type="string", example="The password field is required.")
+     *                  ),
      *              )
      *          )
      *      )
@@ -243,14 +239,14 @@ class AuthController extends Controller
      * Log the user out (Invalidate the token).
      *
      * @return \Illuminate\Http\JsonResponse
-     * 
+     *
      * @OA\Post(
      *      description="Endpoint for log out. It invalidates the JWT",
      *      path="/api/auth/logout",
      *      tags={"Auth"},
      *      security={{"access_token":{}}},
      *      @OA\Response(
-     *          response="200", 
+     *          response="200",
      *          description="Successfully logged out",
      *          content={
      *              @OA\MediaType(
@@ -282,14 +278,14 @@ class AuthController extends Controller
      * Get the authenticated User.
      *
      * @return \Illuminate\Http\JsonResponse
-     * 
+     *
      * @OA\Get(
      *      path="/api/auth/me",
      *      tags={"Auth"},
      *      security={{"access_token":{}}},
      *      @OA\Response(
-     *          response="200", 
-     *          description="The user saved data", 
+     *          response="200",
+     *          description="The user saved data",
      *          @OA\JsonContent(ref="#/components/schemas/User"),
      *      ),
      *      @OA\Response(response="401", description="Unauthenticated")
@@ -317,7 +313,7 @@ class AuthController extends Controller
      * @param  string $token
      *
      * @return \Illuminate\Http\JsonResponse
-     * 
+     *
      */
     protected function respondWithToken($token)
     {

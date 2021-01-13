@@ -20,13 +20,13 @@ class BooksController extends Controller
      * Search books
      *
      * @return \Illuminate\Http\JsonResponse
-     * 
+     *
      * @OA\Post(
      *      description="Search by Title OR ISBN. If both are passed, ISBN will be used.",
      *      path="/api/books/search",
      *      tags={"Books"},
      *      security={{"access_token":{}}},
-     * 
+     *
      *      @OA\RequestBody(
      *          @OA\MediaType(mediaType="application/json",
      *              @OA\Schema(
@@ -43,9 +43,9 @@ class BooksController extends Controller
      *              )
      *          )
      *      ),
-     * 
+     *
      *      @OA\Response(
-     *          response="200", 
+     *          response="200",
      *          description="Mathing books.",
      *          @OA\JsonContent(type="array",
      *              @OA\Items(ref="#/components/schemas/Book")
@@ -61,14 +61,12 @@ class BooksController extends Controller
      *              ),
      *              @OA\Property(
      *                  property="errors",
-     *                  type="array",
-     *                  @OA\Items(
-     *                      @OA\Property(
-     *                          property="isbn",
-     *                          type="array",
-     *                          @OA\Items(type="string", example="Must be a valid ISBN-10.")
-     *                      ),
-     *                  )
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="isbn",
+     *                      type="array",
+     *                      @OA\Items(type="string", example="Must be a valid ISBN-10.")
+     *                  ),
      *              )
      *          )
      *      )
@@ -92,13 +90,13 @@ class BooksController extends Controller
      * Create book
      *
      * @return \Illuminate\Http\JsonResponse
-     * 
+     *
      * @OA\Post(
      *      description="Adds a new book to the library.",
      *      path="/api/books",
      *      tags={"Books"},
      *      security={{"access_token":{}}},
-     * 
+     *
      *      @OA\RequestBody(
      *          @OA\MediaType(mediaType="application/json",
      *              @OA\Schema(
@@ -109,9 +107,9 @@ class BooksController extends Controller
      *              )
      *          )
      *      ),
-     * 
+     *
      *      @OA\Response(
-     *          response="200", 
+     *          response="200",
      *          description="The book data.",
      *          @OA\JsonContent(ref="#/components/schemas/Book")
      *      ),
@@ -125,14 +123,12 @@ class BooksController extends Controller
      *              ),
      *              @OA\Property(
      *                  property="errors",
-     *                  type="array",
-     *                  @OA\Items(
-     *                      @OA\Property(
-     *                          property="isbn",
-     *                          type="array",
-     *                          @OA\Items(type="string", example="Must be a valid ISBN-10.")
-     *                      ),
-     *                  )
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="isbn",
+     *                      type="array",
+     *                      @OA\Items(type="string", example="Must be a valid ISBN-10.")
+     *                  ),
      *              )
      *          )
      *      )
@@ -157,13 +153,13 @@ class BooksController extends Controller
      * Checkout book
      *
      * @return \Illuminate\Http\JsonResponse
-     * 
+     *
      * @OA\Post(
      *      description="Checks out a book.",
      *      path="/api/books/{bookId}/checkout",
      *      tags={"Books"},
      *      security={{"access_token":{}}},
-     * 
+     *
      *      @OA\Parameter(
      *          name="bookId",
      *          in="path",
@@ -176,9 +172,9 @@ class BooksController extends Controller
      *              minimum=1
      *          )
      *      ),
-     * 
+     *
      *      @OA\Response(
-     *          response="200", 
+     *          response="200",
      *          description="Book successfully checked out.",
      *          @OA\JsonContent(
      *              @OA\Property(
@@ -198,14 +194,12 @@ class BooksController extends Controller
      *              ),
      *              @OA\Property(
      *                  property="errors",
-     *                  type="array",
-     *                  @OA\Items(
-     *                      @OA\Property(
-     *                          property="checked_out",
-     *                          type="array",
-     *                          @OA\Items(type="string", example="Book is not available to checkout.")
-     *                      ),
-     *                  )
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="checked_out",
+     *                      type="array",
+     *                      @OA\Items(type="string", example="Book is not available to checkout.")
+     *                  ),
      *              )
      *          )
      *      )
@@ -237,13 +231,13 @@ class BooksController extends Controller
      * Checkin book
      *
      * @return \Illuminate\Http\JsonResponse
-     * 
+     *
      * @OA\Post(
      *      description="Checks in a book.",
      *      path="/api/books/{bookId}/checkin",
      *      tags={"Books"},
      *      security={{"access_token":{}}},
-     * 
+     *
      *      @OA\Parameter(
      *          name="bookId",
      *          in="path",
@@ -256,9 +250,9 @@ class BooksController extends Controller
      *              minimum=1
      *          )
      *      ),
-     * 
+     *
      *      @OA\Response(
-     *          response="200", 
+     *          response="200",
      *          description="Book successfully checked in.",
      *          @OA\JsonContent(
      *              @OA\Property(
@@ -278,14 +272,12 @@ class BooksController extends Controller
      *              ),
      *              @OA\Property(
      *                  property="errors",
-     *                  type="array",
-     *                  @OA\Items(
-     *                      @OA\Property(
-     *                          property="already_available",
-     *                          type="array",
-     *                          @OA\Items(type="string", example="Book is already available.")
-     *                      ),
-     *                  )
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="already_available",
+     *                      type="array",
+     *                      @OA\Items(type="string", example="Book is already available.")
+     *                  ),
      *              )
      *          )
      *      )
