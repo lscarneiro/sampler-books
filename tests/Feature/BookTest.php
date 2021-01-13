@@ -111,5 +111,8 @@ class BookTest extends TestCase
             ->where('action', 'CHECKOUT')
             ->first();
         assertNotNull($userLog);
+
+        $updatedBook = Book::find($book->id);
+        assertFalse($updatedBook->isAvailable());
     }
 }
