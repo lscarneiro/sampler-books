@@ -12,4 +12,8 @@ export class LoginService {
   authenticate(data: LoginData): Observable<AuthData> {
     return this.http.post<AuthData>(`/auth/login`, data);
   }
+
+  logout(): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(`/auth/logout`, null);
+  }
 }

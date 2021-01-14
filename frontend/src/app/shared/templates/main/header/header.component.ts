@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TokenService } from 'src/app/core/auth';
+import { LoginService } from 'src/app/login/services';
 
 @Component({
   selector: 'app-header',
@@ -8,11 +9,13 @@ import { TokenService } from 'src/app/core/auth';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  constructor(private tokenService: TokenService, private router: Router) {}
+  constructor(private tokenService: TokenService, private router: Router, private loginService: LoginService) {}
 
   ngOnInit(): void {}
   logout(): void {
-    this.tokenService.clearAuthToken();
-    this.router.navigateByUrl('/login');
+    this.loginService.logout().subscribe(() => {
+      this.tokenService.clearAuthToken();
+      this.router.navigateByUrl('/login');
+    });
   }
 }
