@@ -1,0 +1,52 @@
+<div class="login-container">
+  <div class="container-fluid h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+      <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+        <div class="card">
+          <div class="card-header text-center">Sampler Books Library</div>
+          <div class="card-body">
+            <form [formGroup]="formGroup" (submit)="login()">
+              <div class="form-group">
+                <label for="txtEmail">Email</label>
+                <input
+                  id="txtEmail"
+                  [class.is-invalid]="formGroup.get('email').invalid && formGroup.get('email').touched"
+                  formControlName="email"
+                  class="form-control"
+                  type="email"
+                />
+                <div class="text-danger" *ngIf="formGroup.get('email').getError('required') && formGroup.get('email').touched">
+                  Required
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="txtPassword">Password</label>
+                <input
+                  id="txtPassword"
+                  [class.is-invalid]="formGroup.get('password').invalid && formGroup.get('password').touched"
+                  formControlName="password"
+                  class="form-control"
+                  type="password"
+                />
+                <div class="text-danger" *ngIf="formGroup.get('password').getError('required') && formGroup.get('password').touched">
+                  Required
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <button class="btn btn-primary btn-block" type="submit">Login</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 mt-3">
+                  <hr />
+                  <a class="btn btn-link btn-lg btn-block" [routerLink]="['/register']"> Register new account </a>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
