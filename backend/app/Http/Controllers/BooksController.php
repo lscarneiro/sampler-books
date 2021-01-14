@@ -197,8 +197,7 @@ class BooksController extends Controller
      *                  type="object",
      *                  @OA\Property(
      *                      property="checked_out",
-     *                      type="array",
-     *                      @OA\Items(type="string", example="Book is not available to checkout.")
+     *                      type="string", example="Book is not available to checkout."
      *                  ),
      *              )
      *          )
@@ -275,8 +274,7 @@ class BooksController extends Controller
      *                  type="object",
      *                  @OA\Property(
      *                      property="already_available",
-     *                      type="array",
-     *                      @OA\Items(type="string", example="Book is already available.")
+     *                      type="string", example="Book is already available."
      *                  ),
      *              )
      *          )

@@ -537,12 +537,9 @@
                                             "properties": {
                                                 "checked_out": {
                                                     "description": "Checkout book",
-                                                    "type": "array",
-                                                    "items": {
                                                         "type": "string",
                                                         "example": "Book is not available to checkout."
                                                     }
-                                                }
                                             },
                                             "type": "object"
                                         }
@@ -619,12 +616,9 @@
                                             "properties": {
                                                 "already_available": {
                                                     "description": "Checkin book",
-                                                    "type": "array",
-                                                    "items": {
                                                         "type": "string",
                                                         "example": "Book is already available."
                                                     }
-                                                }
                                             },
                                             "type": "object"
                                         }
