@@ -1,0 +1,47 @@
+<div class="register-container">
+  <div class="container-fluid min-vh-100">
+    <div class="row min-vh-100 justify-content-center align-items-center">
+      <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+        <div class="card">
+          <div class="card-header text-center">Sampler Books Library</div>
+          <div class="card-body">
+            <form [formGroup]="formGroup" (submit)="register()">
+              <app-text-input formControlName="name" label="Nome">
+                <app-field-error errorName="required" field="name">Required</app-field-error>
+              </app-text-input>
+              <app-email-input formControlName="email" label="Email">
+                <app-field-error errorName="email" field="email">Must be a valid email address.</app-field-error>
+                <app-field-error errorName="required" field="email">Required</app-field-error>
+              </app-email-input>
+              <app-password-input formControlName="password" label="Password">
+                <app-field-error errorName="required" field="password">Required</app-field-error>
+                <app-field-error errorName="minlength" field="password">Must have at least 8 characters</app-field-error>
+              </app-password-input>
+              <app-password-input formControlName="password_confirmation" label="Password confirmation">
+                <app-field-error errorName="required" field="password_confirmation">Required</app-field-error>
+                <app-field-error errorName="password_mismatch" field="password_confirmation">
+                  Password confirmation mismatch
+                </app-field-error>
+              </app-password-input>
+              <app-date-input formControlName="date_of_birth" label="Date of birth">
+                <app-field-error errorName="invalid_date" field="date_of_birth">Invalid date</app-field-error>
+                <app-field-error errorName="required" field="date_of_birth">Required</app-field-error>
+              </app-date-input>
+              <div class="row">
+                <div class="col-12">
+                  <button class="btn btn-primary btn-block" type="submit">Create new account</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 mt-3">
+                  <hr />
+                  <a class="btn btn-link btn-lg btn-block" [routerLink]="['/login']"> Already have an account </a>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
