@@ -320,4 +320,34 @@ class BooksController extends Controller
             "message" => "Book checkin successful, combe back later!"
         ]);
     }
+
+    /**
+     * Get books from user
+     *
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @OA\Get(
+     *      description="Retrieve the list of books atributed to the user.",
+     *      path="/api/books",
+     *      tags={"Books"},
+     *      security={{"access_token":{}}},
+     *
+     *      @OA\Response(
+     *          response="200",
+     *          description="User books.",
+     *          @OA\JsonContent(type="array",
+     *              @OA\Items(ref="#/components/schemas/Book")
+     *          )
+     *      ),
+     *      @OA\Response(response="401", description="Unauthenticated"),
+     * )
+     */
+    public function userBooks(Request $request)
+    {
+        $user_id = auth()->user()->id;
+        $books =  Book::where('borrower_id', $user_id)
+            ->where('status', 'CHECKED_OUT')
+            ->get();
+        return response()->json($books);
+    }
 }

@@ -26,4 +26,5 @@ Route::group(['middleware' => 'auth:api'], function ($router) {
     Route::post('books/{id}/checkout', 'BooksController@checkout')->where('id', '[0-9]+');;
     Route::post('books/{id}/checkin', 'BooksController@checkin')->where('id', '[0-9]+');;
     Route::post('books', 'BooksController@create');
+    Route::get('books', 'BooksController@userBooks');
 });

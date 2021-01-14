@@ -384,6 +384,37 @@
             }
         },
         "/api/books": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Get books from user",
+                "description": "Retrieve the list of books atributed to the user.",
+                "operationId": "App\\Http\\Controllers\\BooksController::userBooks",
+                "responses": {
+                    "200": {
+                        "description": "User books.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Book"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "access_token": []
+                    }
+                ]
+            },
             "post": {
                 "tags": [
                     "Books"
@@ -537,9 +568,9 @@
                                             "properties": {
                                                 "checked_out": {
                                                     "description": "Checkout book",
-                                                        "type": "string",
-                                                        "example": "Book is not available to checkout."
-                                                    }
+                                                    "type": "string",
+                                                    "example": "Book is not available to checkout."
+                                                }
                                             },
                                             "type": "object"
                                         }
@@ -616,9 +647,9 @@
                                             "properties": {
                                                 "already_available": {
                                                     "description": "Checkin book",
-                                                        "type": "string",
-                                                        "example": "Book is already available."
-                                                    }
+                                                    "type": "string",
+                                                    "example": "Book is already available."
+                                                }
                                             },
                                             "type": "object"
                                         }
