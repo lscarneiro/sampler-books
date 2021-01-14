@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { BookListComponent } from './book-list/book-list.component';
+import { RouterModule, Routes } from '@angular/router';
 import { BookSearchComponent } from './book-search/book-search.component';
 
 const routes: Routes = [
@@ -8,10 +7,7 @@ const routes: Routes = [
     path: 'search',
     component: BookSearchComponent,
   },
-  {
-    path: '',
-    component: BookListComponent,
-  },
+  { path: '**', redirectTo: 'search' },
 ];
 
 @NgModule({

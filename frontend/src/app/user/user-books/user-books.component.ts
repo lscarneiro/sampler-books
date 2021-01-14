@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { BookService } from 'src/app/books/services/book.service';
 import { Book } from 'src/app/shared/models/book';
-import { BookService } from '../services/book.service';
+import { UserService } from '../services/user.service';
 
 @Component({
-  selector: 'app-book-list',
-  templateUrl: './book-list.component.html',
-  styleUrls: ['./book-list.component.scss'],
+  selector: 'app-user-books',
+  templateUrl: './user-books.component.html',
+  styleUrls: ['./user-books.component.scss'],
 })
-export class BookListComponent implements OnInit {
-  constructor(private bookService: BookService) {}
+export class UserBooksComponent implements OnInit {
+  constructor(private userService: UserService, private bookService: BookService) {}
 
   books: Book[] = [];
   ngOnInit(): void {
@@ -16,7 +17,7 @@ export class BookListComponent implements OnInit {
   }
 
   loadBooks(): void {
-    this.bookService.list().subscribe((books) => {
+    this.userService.books().subscribe((books) => {
       this.books = books;
     });
   }

@@ -4,6 +4,7 @@ import { AuthGuard } from 'src/app/core/guards';
 import { BooksModule } from './books/books.module';
 import { LoginModule } from './login/login.module';
 import { RegisterModule } from './register/register.module';
+import { UserModule } from './user/user.module';
 
 const routes: Routes = [
   {
@@ -20,7 +21,13 @@ const routes: Routes = [
     canActivateChild: [AuthGuard],
     loadChildren: () => BooksModule,
   },
-  { path: '**', redirectTo: 'books' },
+  {
+    path: 'user',
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    loadChildren: () => UserModule,
+  },
+  { path: '**', redirectTo: 'user' },
 ];
 
 @NgModule({
