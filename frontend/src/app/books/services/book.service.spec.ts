@@ -28,7 +28,7 @@ describe('BookService', () => {
       title: 'Title',
       isbn: '0005534186',
       published_at: '2020-01-01',
-      status: 'AVAILABLE'
+      status: 'AVAILABLE',
     };
 
     service.search({ isbn: 'test' }).subscribe((books) => {
@@ -66,7 +66,26 @@ describe('BookService', () => {
     httpMock
       .expectOne((req) => req.url.endsWith('/books/1/checkout'))
       .flush({
-        "message": "Book checkout successful, enjoy your reading!"
+        message: 'Book checkout successful, enjoy your reading!',
       });
+  });
+
+  it('should list user books', (done) => {
+    const sampleBook = {
+      id: 1,
+      title: 'Title',
+      isbn: '0005534186',
+      published_at: '2020-01-01',
+      status: 'CHECKED_OUT',
+    };
+    service.list().subscribe((books) => {
+      expect(books).not.toBeNull();
+      expect(books.length).toBe(1);
+      expect(books).toContain(sampleBook);
+
+      done();
+    });
+
+    httpMock.expectOne((req) => req.url.endsWith('/books')).flush([sampleBook]);
   });
 });
