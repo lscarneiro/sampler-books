@@ -82,7 +82,7 @@ class BooksController extends Controller
         if (isset($fields['isbn'])) {
             return Book::where('isbn', $fields['isbn'])->get();
         } else {
-            return Book::where('title', 'LIKE', '%' . $fields['title'] . '%')->get();
+            return Book::where('title', 'ILIKE', '%' . $fields['title'] . '%')->get();
         }
     }
 
