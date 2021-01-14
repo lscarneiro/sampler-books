@@ -86,33 +86,8 @@ class AuthTest extends TestCase
 
         // Tries to retrieve data with blocklisted token
         $response2 = $this->withHeader('Authorization', "Bearer $access_token")
-            ->getJson('/api/auth/me');
+            ->getJson('/api/user');
 
         $response2->assertUnauthorized();
-    }
-
-    public function testShouldNotGetUserWhenUnauthorized()
-    {
-        $response = $this->getJson('/api/auth/me');
-
-        $response->assertUnauthorized();
-    }
-
-    public function testShouldGetUserData()
-    {
-        $userPassword = 'password';
-        $user = factory(\App\User::class)->create(['password' => bcrypt($userPassword)]);
-
-        $access_token = JWTAuth::fromUser($user);
-        $response = $this->withHeader('Authorization', "Bearer $access_token")
-            ->getJson('/api/auth/me');
-
-        $response->assertStatus(200)
-            ->assertJsonStructure(['id', 'name', 'email', 'date_of_birth'])
-            ->assertJson([
-                'name' => $user->name,
-                'email' => $user->email,
-                'date_of_birth' =>  date_format($user->date_of_birth, 'Y-m-d'),
-            ]);
     }
 }

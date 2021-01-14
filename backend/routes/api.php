@@ -14,17 +14,19 @@ use Illuminate\Http\Request;
 */
 
 Route::group(['prefix' => 'auth'], function ($router) {
-    Route::post('register', 'Auth\AuthController@register');
-    Route::post('login', 'Auth\AuthController@login');
-    Route::post('logout', 'Auth\AuthController@logout');
-    Route::post('refresh', 'Auth\AuthController@refresh');
-    Route::get('me', 'Auth\AuthController@me');
+    Route::post('register', 'AuthController@register');
+    Route::post('login', 'AuthController@login');
+    Route::post('logout', 'AuthController@logout');
 });
 
 Route::group(['middleware' => 'auth:api'], function ($router) {
-    Route::post('books/search', 'BooksController@search');
-    Route::post('books/{id}/checkout', 'BooksController@checkout')->where('id', '[0-9]+');;
-    Route::post('books/{id}/checkin', 'BooksController@checkin')->where('id', '[0-9]+');;
-    Route::post('books', 'BooksController@create');
-    Route::get('books', 'BooksController@userBooks');
+    Route::get('user', 'UserController@me');
+    Route::get('user/books', 'UserController@userBooks');
+});
+
+Route::group(['middleware' => 'auth:api', 'prefix' => 'books'], function ($router) {
+    Route::post('/search', 'BooksController@search');
+    Route::post('/{id}/checkout', 'BooksController@checkout')->where('id', '[0-9]+');
+    Route::post('/{id}/checkin', 'BooksController@checkin')->where('id', '[0-9]+');
+    Route::post('/', 'BooksController@create');
 });

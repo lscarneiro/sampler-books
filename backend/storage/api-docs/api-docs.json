@@ -13,7 +13,7 @@
                 ],
                 "summary": "Register as new user.",
                 "description": "Register as new user",
-                "operationId": "App\\Http\\Controllers\\Auth\\AuthController::register",
+                "operationId": "App\\Http\\Controllers\\AuthController::register",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -130,7 +130,7 @@
                 ],
                 "summary": "Get a JWT via given credentials.",
                 "description": "Endpoint for log in",
-                "operationId": "App\\Http\\Controllers\\Auth\\AuthController::login",
+                "operationId": "App\\Http\\Controllers\\AuthController::login",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -237,7 +237,7 @@
                 ],
                 "summary": "Log the user out (Invalidate the token).",
                 "description": "Endpoint for log out. It invalidates the JWT",
-                "operationId": "App\\Http\\Controllers\\Auth\\AuthController::logout",
+                "operationId": "App\\Http\\Controllers\\AuthController::logout",
                 "responses": {
                     "200": {
                         "description": "Successfully logged out",
@@ -254,35 +254,6 @@
                                     "example": {
                                         "message": "Successfully logged out"
                                     }
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthenticated"
-                    }
-                },
-                "security": [
-                    {
-                        "access_token": []
-                    }
-                ]
-            }
-        },
-        "/api/auth/me": {
-            "get": {
-                "tags": [
-                    "Auth"
-                ],
-                "summary": "Get the authenticated User.",
-                "operationId": "App\\Http\\Controllers\\Auth\\AuthController::me",
-                "responses": {
-                    "200": {
-                        "description": "The user saved data",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/User"
                                 }
                             }
                         }
@@ -384,37 +355,6 @@
             }
         },
         "/api/books": {
-            "get": {
-                "tags": [
-                    "Books"
-                ],
-                "summary": "Get books from user",
-                "description": "Retrieve the list of books atributed to the user.",
-                "operationId": "App\\Http\\Controllers\\BooksController::userBooks",
-                "responses": {
-                    "200": {
-                        "description": "User books.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Book"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthenticated"
-                    }
-                },
-                "security": [
-                    {
-                        "access_token": []
-                    }
-                ]
-            },
             "post": {
                 "tags": [
                     "Books"
@@ -654,6 +594,68 @@
                                 }
                             }
                         }
+                    }
+                },
+                "security": [
+                    {
+                        "access_token": []
+                    }
+                ]
+            }
+        },
+        "/api/user": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get the authenticated User data.",
+                "operationId": "App\\Http\\Controllers\\UserController::me",
+                "responses": {
+                    "200": {
+                        "description": "The user saved data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "access_token": []
+                    }
+                ]
+            }
+        },
+        "/api/user/books": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get user's borrowed books",
+                "description": "Retrieve the list of books atributed to the user.",
+                "operationId": "App\\Http\\Controllers\\UserController::userBooks",
+                "responses": {
+                    "200": {
+                        "description": "Book list.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Book"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
                     }
                 },
                 "security": [

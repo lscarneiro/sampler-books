@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Rules\ValidPassword;
@@ -272,39 +272,6 @@ class AuthController extends Controller
         auth('api')->logout();
 
         return response()->json(['message' => 'Successfully logged out']);
-    }
-
-    /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     *
-     * @OA\Get(
-     *      path="/api/auth/me",
-     *      tags={"Auth"},
-     *      security={{"access_token":{}}},
-     *      @OA\Response(
-     *          response="200",
-     *          description="The user saved data",
-     *          @OA\JsonContent(ref="#/components/schemas/User"),
-     *      ),
-     *      @OA\Response(response="401", description="Unauthenticated")
-     * )
-     */
-    public function me()
-    {
-        return response()->json(auth('api')->user());
-    }
-
-
-    /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function refresh()
-    {
-        return $this->respondWithToken(auth('api')->refresh());
     }
 
     /**
