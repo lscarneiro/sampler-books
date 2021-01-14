@@ -167,9 +167,7 @@ class BooksController extends Controller
      *          required=true,
      *          @OA\Schema(
      *              type="integer",
-     *              format="int64",
-     *              maximum=10,
-     *              minimum=1
+     *              format="int64"
      *          )
      *      ),
      *
@@ -247,9 +245,7 @@ class BooksController extends Controller
      *          required=true,
      *          @OA\Schema(
      *              type="integer",
-     *              format="int64",
-     *              maximum=10,
-     *              minimum=1
+     *              format="int64"
      *          )
      *      ),
      *

@@ -525,9 +525,7 @@
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "format": "int64",
-                            "maximum": 10,
-                            "minimum": 1
+                            "format": "int64"
                         }
                     }
                 ],
@@ -604,9 +602,7 @@
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "format": "int64",
-                            "maximum": 10,
-                            "minimum": 1
+                            "format": "int64"
                         }
                     }
                 ],
