@@ -9,8 +9,10 @@ use App\Book;
 use App\UserActionLog;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
+use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertFalse;
 use function PHPUnit\Framework\assertNotNull;
+use function PHPUnit\Framework\assertNull;
 use function PHPUnit\Framework\assertTrue;
 
 class BookTest extends TestCase
@@ -116,6 +118,7 @@ class BookTest extends TestCase
 
         $updatedBook = Book::find($book->id);
         assertFalse($updatedBook->isAvailable());
+        assertEquals($this->user->id, $updatedBook->borrower_id);
     }
 
     public function testShouldNotCheckinBookWithoutAuthorzation()
@@ -155,6 +158,9 @@ class BookTest extends TestCase
     public function testShouldCheckinBook()
     {
         $book = factory(Book::class)->states('checked_out')->create();
+        $book->borrower_id = $this->user->id;
+        $book->save();
+
         $userLog = new UserActionLog(['action' => 'CHECKOUT']);
         $userLog->user_id = $this->user->id;
         $userLog->book_id = $book->id;
@@ -173,5 +179,6 @@ class BookTest extends TestCase
 
         $updatedBook = Book::find($book->id);
         assertTrue($updatedBook->isAvailable());
+        assertNull($updatedBook->borrower_id);
     }
 }

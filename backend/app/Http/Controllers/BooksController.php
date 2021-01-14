@@ -212,11 +212,14 @@ class BooksController extends Controller
             throw new UncompletedAction(["checked_out" => "Book is not available to checkout."]);
         }
         \DB::transaction(function () use ($book) {
+            $user_id = auth()->user()->id;
+
             $book->status = "CHECKED_OUT";
+            $book->borrower_id = $user_id;
             $book->save();
 
             $userLog = new UserActionLog(['action' => 'CHECKOUT']);
-            $userLog->user_id = auth()->user()->id;
+            $userLog->user_id = $user_id;
             $userLog->book_id = $book->id;
             $userLog->save();
         });
@@ -304,6 +307,7 @@ class BooksController extends Controller
 
         \DB::transaction(function () use ($book, $user_id) {
             $book->status = "AVAILABLE";
+            $book->borrower_id = null;
             $book->save();
 
             $userLog = new UserActionLog(['action' => 'CHECKIN']);
