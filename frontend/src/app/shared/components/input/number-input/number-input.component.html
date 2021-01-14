@@ -1,0 +1,9 @@
+<div class="form-group">
+  <label for="number_input_{{fieldId}}">{{label}}</label>
+  <input type="number" id="number_input_{{fieldId}}" class="form-control" #inputElement [(ngModel)]="value"
+    (blur)="onTouched($event)" (keydown)="validateInput($event)">
+  <div>
+    <p class="text-danger" *ngFor="let error of validationErrors">{{error}}</p>
+    <ng-content></ng-content>
+  </div>
+</div>

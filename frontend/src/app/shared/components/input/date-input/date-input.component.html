@@ -1,0 +1,10 @@
+<div class="form-group">
+    <label for="date_input_{{fieldId}}">{{label}}</label>
+    <input type="date" id="date_input_{{fieldId}}" class="form-control" #inputElement
+           [(ngModel)]="value"
+           (blur)="onTouched($event)">
+    <div>
+      <p class="text-danger" *ngFor="let error of validationErrors">{{error}}</p>
+      <ng-content></ng-content>
+    </div>
+  </div>

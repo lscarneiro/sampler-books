@@ -1,0 +1,10 @@
+<div class="form-group">
+  <label for="text_input_{{fieldId}}">{{label}}</label>
+  <select id="text_input_{{fieldId}}" class="form-control" #inputElement [(ngModel)]="value" (blur)="onTouched($event)">
+    <option *ngFor="let item of itemList" [value]="getItemValue(item)">{{getItemDescription(item)}}</option>
+  </select>
+  <div>
+    <p class="text-danger" *ngFor="let error of validationErrors">{{error}}</p>
+    <ng-content></ng-content>
+  </div>
+</div>

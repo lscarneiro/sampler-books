@@ -1,0 +1,9 @@
+<div class="form-group">
+    <label for="email_input_{{fieldId}}">{{label}}</label>
+    <input type="email" id="email_input_{{fieldId}}" class="form-control" #inputElement [(ngModel)]="value"
+        (blur)="onTouched($event)">
+    <div>
+      <p class="text-danger" *ngFor="let error of validationErrors">{{error}}</p>
+        <ng-content></ng-content>
+    </div>
+</div>
