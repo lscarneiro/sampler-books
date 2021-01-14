@@ -17,11 +17,13 @@ use Illuminate\Support\Str;
 |
 */
 
-$factory->define(User::class, function (Faker $faker) {
+$defaultPassword = bcrypt('Password0');
+
+$factory->define(User::class, function (Faker $faker) use ($defaultPassword) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'date_of_birth' => date_time_set($faker->dateTimeThisCentury($max = 'now', $timezone = null), 0, 0, 0, 0),
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        'password' => $defaultPassword,
     ];
 });
