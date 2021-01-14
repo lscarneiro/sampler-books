@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/app/core/guards';
+import { BooksModule } from './books/books.module';
 import { LoginModule } from './login/login.module';
 import { RegisterModule } from './register/register.module';
-import { HomeModule } from './home/home.module';
 
 const routes: Routes = [
   {
@@ -15,12 +15,12 @@ const routes: Routes = [
     loadChildren: () => RegisterModule,
   },
   {
-    path: 'home',
+    path: 'books',
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
-    loadChildren: () => HomeModule,
+    loadChildren: () => BooksModule,
   },
-  { path: '**', redirectTo: 'home' },
+  { path: '**', redirectTo: 'books' },
 ];
 
 @NgModule({

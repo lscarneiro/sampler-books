@@ -1,0 +1,53 @@
+<app-main>
+  <div class="container-fluid">
+    <div class="row mt-3 justify-content-center">
+      <div class="col col-sm-6 col-md-4 col-lg-3 text-center">
+        <form [formGroup]="formGroup" (submit)="search()">
+          <app-text-input formControlName="title" label="Title">
+            <app-field-error errorName="required" field="title">Required</app-field-error>
+          </app-text-input>
+          <app-text-input formControlName="isbn" label="ISBN-10">
+            <app-field-error errorName="required" field="isbn">Required</app-field-error>
+          </app-text-input>
+          <div class="row">
+            <div class="col-12">
+              <button class="btn btn-primary btn-block" type="submit">Search</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row justify-content-center mt-3">
+      <div class="col mt-3 text-center" *ngIf="books.length === 0 && !searched">
+        <span class="p-3 bg-light">Fill the inputs and click 'Search'</span>
+      </div>
+      <div class="col mt-3 text-center" *ngIf="books.length === 0 && searched">
+        <span class="p-3 bg-light">No books meet the criteria</span>
+      </div>
+      <div class="col col-sm-12 col-md-10 col-lg-10 table-responsive" *ngIf="books.length > 0">
+        <table class="table table-sm table-striped">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Title</th>
+              <th scope="col" class="d-none d-sm-table-cell">ISBN</th>
+              <th scope="col" class="d-none d-sm-table-cell">Published at</th>
+              <th scope="col" class="d-none d-sm-table-cell">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let book of books">
+              <td class="text-center">
+                <button class="btn btn-sm btn-primary" *ngIf="book.status === 'AVAILABLE'" (click)="checkout(book)">Checkout</button>
+              </td>
+              <td>{{ book.title }}</td>
+              <td class="d-none d-sm-table-cell">{{ book.isbn }}</td>
+              <td class="d-none d-sm-table-cell">{{ book.published_at }}</td>
+              <td class="d-none d-sm-table-cell">{{ book.status }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</app-main>
