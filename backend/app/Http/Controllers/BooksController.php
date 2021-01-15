@@ -256,7 +256,7 @@ class BooksController extends Controller
      *              @OA\Property(
      *                  property="message",
      *                  type="string",
-     *                  example="Book checkin successful, combe back later!"
+     *                  example="Book checkin successful, come back later!"
      *              ),
      *          )
      *      ),
@@ -313,7 +313,7 @@ class BooksController extends Controller
         });
 
         return response()->json([
-            "message" => "Book checkin successful, combe back later!"
+            "message" => "Book checkin successful, come back later!"
         ]);
     }
 

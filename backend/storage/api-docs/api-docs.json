@@ -556,7 +556,7 @@
                                         "message": {
                                             "description": "Checkin book",
                                             "type": "string",
-                                            "example": "Book checkin successful, combe back later!"
+                                            "example": "Book checkin successful, come back later!"
                                         }
                                     },
                                     "type": "object"

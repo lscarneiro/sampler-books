@@ -52,7 +52,7 @@ describe('BookService', () => {
     httpMock
       .expectOne((req) => req.url.endsWith('/books/1/checkin'))
       .flush({
-        message: 'Book checkin successful, combe back later!',
+        message: 'Book checkin successful, come back later!',
       });
   });
 

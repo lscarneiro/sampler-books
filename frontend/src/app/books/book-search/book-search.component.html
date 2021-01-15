@@ -43,7 +43,7 @@
           <tbody>
             <tr *ngFor="let book of books">
               <td class="text-center">
-                <button class="btn btn-sm btn-primary"  [disabled]="book.status === 'CHECKED_OUT'" (click)="checkout(book)">Checkout</button>
+                <button class="btn btn-sm btn-primary" [disabled]="book.status === 'CHECKED_OUT'" (click)="checkout(book)">Checkout</button>
               </td>
               <td class="align-middle">{{ book.title }}</td>
               <td class="d-none d-sm-table-cell align-middle">{{ book.isbn }}</td>
