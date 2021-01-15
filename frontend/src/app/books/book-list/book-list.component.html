@@ -2,15 +2,11 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col mt-3 text-center">
-        <h3>Your current books</h3>
+        <h3>Newly addedd books</h3>
+        <p>TOP 30 newest books </p>
       </div>
     </div>
     <div class="row justify-content-center mt-3">
-      <div class="col mt-3 text-center" *ngIf="books.length === 0">
-        <span class="p-3 bg-light"
-          >No books yet, <a href="/books/search">try searching one</a> or <a href="/books/newest">checking our newly added section</a>
-        </span>
-      </div>
       <div class="col col-sm-12 col-md-10 col-lg-10 table-responsive" *ngIf="books.length > 0">
         <table class="table table-sm table-striped">
           <thead class="thead-light">
@@ -19,16 +15,19 @@
               <th scope="col">Title</th>
               <th scope="col" class="d-none d-sm-table-cell">ISBN</th>
               <th scope="col" class="d-none d-sm-table-cell">Published at</th>
+              <th scope="col" class="d-none d-sm-table-cell">Status</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let book of books">
-              <td class="text-center align-middle">
-                <button class="btn btn-sm btn-warning" (click)="checkin(book)">Check in</button>
+              <td class="text-center">
+                <button class="btn btn-sm btn-primary" [disabled]="book.status === 'CHECKED_OUT'" (click)="checkout(book)">Checkout</button>
               </td>
               <td class="align-middle">{{ book.title }}</td>
               <td class="d-none d-sm-table-cell align-middle">{{ book.isbn }}</td>
               <td class="d-none d-sm-table-cell align-middle">{{ book.published_at }}</td>
+              <td class="d-none d-sm-table-cell align-middle" *ngIf="book.status === 'AVAILABLE'">Available</td>
+              <td class="d-none d-sm-table-cell align-middle" *ngIf="book.status === 'CHECKED_OUT'">Not available</td>
             </tr>
           </tbody>
         </table>

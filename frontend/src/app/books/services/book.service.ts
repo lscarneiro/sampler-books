@@ -21,4 +21,8 @@ export class BookService {
   checkout(id: number): Observable<{ message: string }> {
     return this.http.post<{ message: string }>(`/books/${id}/checkout`, null);
   }
+
+  newest(): Observable<Book[]> {
+    return this.http.get<Book[]>(`/books/newest`);
+  }
 }

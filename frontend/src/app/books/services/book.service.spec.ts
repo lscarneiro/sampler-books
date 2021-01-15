@@ -69,4 +69,23 @@ describe('BookService', () => {
         message: 'Book checkout successful, enjoy your reading!',
       });
   });
+
+  it('should retrieve newest books', (done) => {
+    const sampleBook = {
+      id: 1,
+      title: 'Title',
+      isbn: '0005534186',
+      published_at: '2020-01-01',
+      status: 'AVAILABLE',
+    };
+
+    service.newest().subscribe((books) => {
+      expect(books).not.toBeNull();
+      expect(books.length).toBe(1);
+
+      done();
+    });
+
+    httpMock.expectOne((req) => req.url.endsWith('/books/newest')).flush([sampleBook]);
+  });
 });
