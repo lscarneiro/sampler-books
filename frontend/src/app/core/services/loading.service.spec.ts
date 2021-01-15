@@ -13,13 +13,25 @@ describe('LoadingService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should propagate server validation error via OnServerError', (done) => {
+  it('should propagate loading state true', (done) => {
     service.OnLoadingEvent.subscribe((result) => {
-      expect(result).toBeTruthy();
+      expect(result).toBeTrue();
+      expect(service.isLoading).toBeTrue();
 
       done();
     });
 
     service.PropagateLoadingState(true);
+  });
+
+  it('should propagate loading state false', (done) => {
+    service.OnLoadingEvent.subscribe((result) => {
+      expect(result).toBeFalse();
+      expect(service.isLoading).toBeFalse();
+
+      done();
+    });
+
+    service.PropagateLoadingState(false);
   });
 });

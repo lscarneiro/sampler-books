@@ -12,6 +12,7 @@ export class LoadingComponent implements OnInit {
   isLoading = false;
 
   ngOnInit(): void {
+    this.isLoading = this.loadingSevice.isLoading;
     this.loadingSevice.OnLoadingEvent.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
