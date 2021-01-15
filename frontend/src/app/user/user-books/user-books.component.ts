@@ -12,6 +12,7 @@ export class UserBooksComponent implements OnInit {
   constructor(private userService: UserService, private bookService: BookService) {}
 
   books: Book[] = [];
+
   ngOnInit(): void {
     this.loadBooks();
   }

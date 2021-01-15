@@ -1,5 +1,10 @@
 <app-main>
   <div class="container-fluid">
+    <div class="row">
+      <div class="col mt-3 text-center">
+        <h3>Your current books</h3>
+      </div>
+    </div>
     <div class="row justify-content-center mt-3">
       <div class="col mt-3 text-center" *ngIf="books.length === 0">
         <span class="p-3 bg-light">No books yet, <a href="/books/search">try searching one</a> </span>
@@ -16,12 +21,12 @@
           </thead>
           <tbody>
             <tr *ngFor="let book of books">
-              <td class="text-center">
+              <td class="text-center align-middle">
                 <button class="btn btn-sm btn-primary" (click)="checkin(book)">Check in</button>
               </td>
-              <td>{{ book.title }}</td>
-              <td class="d-none d-sm-table-cell">{{ book.isbn }}</td>
-              <td class="d-none d-sm-table-cell">{{ book.published_at }}</td>
+              <td class="align-middle">{{ book.title }}</td>
+              <td class="d-none d-sm-table-cell align-middle">{{ book.isbn }}</td>
+              <td class="d-none d-sm-table-cell align-middle">{{ book.published_at }}</td>
             </tr>
           </tbody>
         </table>

@@ -21,6 +21,7 @@ export class BookSearchComponent implements OnInit {
   formGroup: FormGroup;
   books: Book[] = [];
   searched = false;
+
   ngOnInit(): void {}
 
   search(): void {
@@ -30,6 +31,7 @@ export class BookSearchComponent implements OnInit {
     } else {
       delete bookSearch.isbn;
     }
+
     this.bookService.search(bookSearch).subscribe((books) => {
       this.books = books;
       this.searched = true;
