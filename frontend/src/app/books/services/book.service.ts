@@ -14,7 +14,7 @@ export class BookService {
     return this.http.post<Book[]>(`/books/search`, data);
   }
 
-  checkin(id: number): Observable<any> {
+  checkin(id: number): Observable<{ message: string }> {
     return this.http.post<any>(`/books/${id}/checkin`, null);
   }
 

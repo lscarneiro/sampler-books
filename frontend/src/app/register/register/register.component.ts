@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { filter } from 'rxjs/operators';
 import { TokenService } from 'src/app/core/auth';
 import { FormValidatorService } from 'src/app/core/services';
@@ -20,7 +21,8 @@ export class RegisterComponent implements OnInit {
     private fb: FormBuilder,
     private registerService: RegisterService,
     private formValidator: FormValidatorService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   formGroup: FormGroup;
@@ -52,10 +54,13 @@ export class RegisterComponent implements OnInit {
       return;
     }
     const userData = this.formGroup.value as User;
-    this.registerService.register(userData).subscribe((authData) => {
-      this.processRegistration(authData);
-      this.router.navigateByUrl('/');
-    }, this.handleRegisterError);
+    this.registerService.register(userData).subscribe(
+      (authData) => {
+        this.processRegistration(authData);
+        this.router.navigateByUrl('/');
+      },
+      (err) => this.handleRegisterError(err)
+    );
   }
 
   processRegistration(authData: AuthData): void {
@@ -64,9 +69,8 @@ export class RegisterComponent implements OnInit {
   }
 
   handleRegisterError(err): void {
-    const unexpectedErrorMessage = 'An unexpected error occurred, try again later.';
     if (err instanceof HttpErrorResponse && err.status !== 422) {
-      alert('An unexpected error occurred, try again later.');
+      this.toastr.error('An unexpected error occurred, try again later.');
     }
   }
 }

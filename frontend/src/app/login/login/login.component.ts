@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { filter } from 'rxjs/operators';
 import { TokenService } from 'src/app/core/auth';
 import { FormValidatorService } from 'src/app/core/services';
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private loginService: LoginService,
     private formValidator: FormValidatorService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
     this.formGroup = this.fb.group({
       email: [null, Validators.required],
@@ -53,7 +55,7 @@ export class LoginComponent implements OnInit {
         this.processLogin(authData);
         this.router.navigateByUrl('/');
       },
-      this.handleRegisterError
+      (err) => this.handleLoginError(err)
     );
   }
 
@@ -62,16 +64,16 @@ export class LoginComponent implements OnInit {
     this.tokenService.setAuthToken(authData.access_token);
   }
 
-  handleRegisterError(err): void {
+  handleLoginError(err): void {
     const unexpectedErrorMessage = 'An unexpected error occurred, try again later.';
     if (err instanceof HttpErrorResponse) {
       if (err.status === 401) {
-        alert('Incorrect email/password.');
+        this.toastr.error('Incorrect email/password.');
       } else {
-        alert(unexpectedErrorMessage);
+        this.toastr.error(unexpectedErrorMessage);
       }
     } else {
-      alert(unexpectedErrorMessage);
+      this.toastr.error(unexpectedErrorMessage);
     }
   }
 }

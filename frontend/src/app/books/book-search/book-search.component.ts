@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Book } from 'src/app/shared/models/book';
 import { BookSearch } from 'src/app/shared/models/book-search';
 import { BookService } from '../services/book.service';
@@ -11,7 +12,7 @@ import { BookService } from '../services/book.service';
   styleUrls: ['./book-search.component.scss'],
 })
 export class BookSearchComponent implements OnInit {
-  constructor(private bookService: BookService, private fb: FormBuilder, private router: Router) {
+  constructor(private bookService: BookService, private fb: FormBuilder, private router: Router, private toastr: ToastrService) {
     this.formGroup = this.fb.group({
       isbn: '',
       title: '',
@@ -41,14 +42,14 @@ export class BookSearchComponent implements OnInit {
   checkout(book: Book): void {
     this.bookService.checkout(book.id).subscribe(
       (data) => {
-        alert(data.message);
+        this.toastr.success(data.message);
         this.router.navigateByUrl('/');
       },
       (err) => {
         if (err.error.errors.checked_out) {
-          alert(err.error.errors.checked_out);
+          this.toastr.error(err.error.errors.checked_out);
         } else {
-          alert(err.error.message);
+          this.toastr.error(err.error.message);
         }
       }
     );
