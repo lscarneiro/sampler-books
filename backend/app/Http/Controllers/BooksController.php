@@ -46,7 +46,7 @@ class BooksController extends Controller
      *
      *      @OA\Response(
      *          response="200",
-     *          description="Mathing books.",
+     *          description="Matching books.",
      *          @OA\JsonContent(type="array",
      *              @OA\Items(ref="#/components/schemas/Book")
      *          )

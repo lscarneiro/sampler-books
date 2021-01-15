@@ -300,7 +300,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Mathing books.",
+                        "description": "Matching books.",
                         "content": {
                             "application/json": {
                                 "schema": {

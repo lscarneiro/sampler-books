@@ -23,7 +23,7 @@ This project is divided in two parts:
 #### Frontend
 
 * [Angular 11](https://angular.io/)
-* [Boostrap](https://getbootstrap.com/docs/4.5/getting-started/introduction/)
+* [Bootstrap](https://getbootstrap.com/docs/4.5/getting-started/introduction/)
 
 
 `#SamplerFam` thanks for this great oportunity, cheers!
