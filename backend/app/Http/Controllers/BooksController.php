@@ -87,6 +87,35 @@ class BooksController extends Controller
     }
 
     /**
+     * Newest books
+     *
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @OA\Get(
+     *      description="Get the top 30 newest books added to the library.",
+     *      path="/api/books/newest",
+     *      tags={"Books"},
+     *      security={{"access_token":{}}},
+     *
+     *      @OA\Response(
+     *          response="200",
+     *          description="Matching books.",
+     *          @OA\JsonContent(type="array",
+     *              @OA\Items(ref="#/components/schemas/Book")
+     *          )
+     *      ),
+     *      @OA\Response(response="401", description="Unauthenticated"),
+     * )
+     */
+    public function newest()
+    {
+        return Book::where('status', 'AVAILABLE')
+            ->orderBy('id', 'desc')
+            ->limit(30)
+            ->get();
+    }
+
+    /**
      * Create book
      *
      * @return \Illuminate\Http\JsonResponse
@@ -316,5 +345,4 @@ class BooksController extends Controller
             "message" => "Book checkin successful, come back later!"
         ]);
     }
-
 }

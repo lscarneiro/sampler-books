@@ -354,6 +354,39 @@
                 ]
             }
         },
+        "/api/books/newest": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Newest books",
+                "description": "Get the top 30 newest books added to the library.",
+                "operationId": "App\\Http\\Controllers\\BooksController::newest",
+                "responses": {
+                    "200": {
+                        "description": "Matching books.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Book"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "access_token": []
+                    }
+                ]
+            }
+        },
         "/api/books": {
             "post": {
                 "tags": [

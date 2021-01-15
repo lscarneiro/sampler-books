@@ -47,6 +47,24 @@ class BookTest extends TestCase
             ->assertJsonCount(1);
     }
 
+    public function testUnauthorizedNewest()
+    {
+        $response = $this->getJson('/api/books/newest');
+
+        $response->assertUnauthorized();
+    }
+
+    public function testAuthorizedNewestShouldReturnBooks()
+    {
+        factory(Book::class, 40)->create();
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->access_token)
+            ->getJson('/api/books/newest');
+
+        $response->assertStatus(200)
+            ->assertJsonCount(30);
+    }
+
     public function testUnauthorizedBookCreation()
     {
         $response = $this->postJson('/api/books', []);

@@ -26,6 +26,7 @@ Route::group(['middleware' => 'auth:api'], function ($router) {
 
 Route::group(['middleware' => 'auth:api', 'prefix' => 'books'], function ($router) {
     Route::post('/search', 'BooksController@search');
+    Route::get('/newest', 'BooksController@newest');
     Route::post('/{id}/checkout', 'BooksController@checkout')->where('id', '[0-9]+');
     Route::post('/{id}/checkin', 'BooksController@checkin')->where('id', '[0-9]+');
     Route::post('/', 'BooksController@create');
