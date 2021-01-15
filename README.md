@@ -1,21 +1,29 @@
-## About Sampler Books
+## Sampler Books Library
 
 Welcome!
-This is the Sambpler Books challenge solution developed by Luiz Eduardo
+
+This is the Sampler Books Library challenge implemented by [Luiz Carneiro](https://github.com/lscarneiro)
+
+## Structure
 
 This project is divided in two parts:
-- [frontend](frontend/README.md) 
-- [backend](backend/README.md)
+- [Backend](backend/README.md)
+- [Frontend](frontend/README.md) 
 
-> Click on the links to access their respective READMEs
+> Click on the links above to access their respective READMEs
 
-### Technologies
+## Technologies
 
 #### Backend
 
-* Laravel 6.x (LTS)
-* Docker
+* [Laravel 6.x (LTS)](https://laravel.com/docs/6.x/releases#support-policy)
+* [Docker](https://www.docker.com/)
+* [PostgreSQL](https://www.postgresql.org/)
 
 #### Frontend
 
-* Angular
+* [Angular 11](https://angular.io/)
+* [Boostrap](https://getbootstrap.com/docs/4.5/getting-started/introduction/)
+
+
+`#SamplerFam` thanks for this great oportunity, cheers!

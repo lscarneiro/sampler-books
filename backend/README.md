@@ -1,33 +1,60 @@
-## About Sampler Books
+# Sampler Books Library Backend
 
-Simple API with frontend to manage Book Library
+This is the Backend part of the challenge.
 
-### Requirements
+After you clone the repo, go to `./backend` and execute:
 
-* Docker
-* PHP >=7.2.5
-* Composer
+```shell
+$ cp .env.dev .env
+```
+To create the development configuration as intended.
 
-> The Dockerfile already picks from `7.4`
 
-### Initial setup
+## Requirements
 
-1. Setup `.env` accordingly
-1. Execute `composer install` on the root of the project directory to install the dependencies (you can do this directly from the container, no need to install `composer` on your machine)
-1. You're ready to spin it up for the first time!
+For the sake of minimal configuration, you will need [Docker](https://www.docker.com/products/docker-desktop), this way the `Dockerfile` and `docker-compose.yml` take care of everything needed for this project.
 
-### Spinning up
+## Spinning up
 
-This project uses `docker-compose` to spin up the needed environment
-
-To give it a go, execute:
+Run `docker-compose` to spin up the containers.
 ```shell
 $ docker-compose up -d
-``` 
-> The first time it's slow to, as it takes time to download the images and setup the container.
+```
 
-If everything went fine, you can access it at http://localhost:8000
+Now it's time to work inside the container shell, so:
+```shell
+$ docker exec -it webserver bash
+```
+You're inside the app container, congratulations!
 
-### API Docs
+Install dependencies:
+```shell
+$ composer install
+```
 
-Spin up the environment then acess it here: http://localhost:8000/api/documentation
+We're almost there! Time for `migrations`/`seeds`:
+
+```shell
+$ php artisan migrate --seed
+```
+
+If everything went fine, you can access it at http://localhost:8000, welcome!
+
+If the Frontend is up as well, you can you can sign in with the credentials below `=)`
+```
+email: luiz@sampler.io
+password: Password0
+```
+> Note: "`Password0`" is the default password for all seeded users!
+
+## API Docs
+
+The API documentation is based on Swagger/OpenAPI Specification, using doctrine annotations.
+
+To access it, just navigate to http://localhost:8000/api/documentation, there you can try out all the endpoints, neat!
+
+## Database
+
+This projects uses a PostgreSQL container, you can access it with this host: `localhost:5432`, after the container is up. 
+
+The detailed credentials can be found in the [.env.dev](.env.dev) (or [.env](.env) if you finished the setup already!).
